@@ -47,7 +47,7 @@ namespace Erickson_PS6
             // introduce game and rules
             Console.WriteLine("Welcome to NUMBER GUESSER!!");
             Console.WriteLine();
-            Console.WriteLine("I am thinking of a number between 1 and 100, " +
+            Console.WriteLine("I am thinking of a number between 0 and 100, " +
                 "you have 8 tries to guess what I am thinking!");
             Console.WriteLine();
 
@@ -63,24 +63,28 @@ namespace Erickson_PS6
                     // save parsed int ad iGuess
                     try {
                         iGuess = int.Parse(sGuess);
-                        bValid = true;
+
+                        // check to make sure int is between 1 and 100
+                        if (iGuess < 0 || iGuess > 100)
+                        {
+                            Console.WriteLine("Please enter an integer between 0 and 100");
+                            Console.WriteLine();
+                            bValid = false;
+                        }
+                        else { bValid = true; }
+                        
                     }
 
                     // catch non-integers and prompt for a valid guess
                     catch
                     {
-                        Console.WriteLine("Please enter an integer between 1 and 100");
+                        Console.WriteLine("bshbs Please enter an integer between 0 and 100");
                         Console.WriteLine();
                         bValid = false;
                     }
 
-                    // check to make sure int is between 1 and 100
-                    if (iGuess < 0 || iGuess > 100)
-                    {
-                        Console.WriteLine("Please enter an integer between 1 and 100");
-                        Console.WriteLine();
-                        bValid = false;
-                    }
+                    
+                   
                 } while (!bValid);
 
                // test guess against random number
