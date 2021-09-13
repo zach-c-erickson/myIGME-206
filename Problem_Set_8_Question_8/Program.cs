@@ -25,7 +25,7 @@ namespace Problem_Set_8_Question_8
             string resultString = "";
             string testWord = null;
 
-            // use a check comma bool
+            // use a check punctuation bool
             bool hasPunctuation = false;
 
             // make sure the user inputted something
@@ -43,9 +43,10 @@ namespace Problem_Set_8_Question_8
             // go through each word and check if it says yes or no
             foreach(string word in words)
             {
-
+                // check to see if the string ends with punctuation
                 hasPunctuation = Char.IsPunctuation(word, word.Length-1);
 
+                // if so, grab the part of the string without punctuation
                 if (hasPunctuation)
                 {
                     testWord = word.Substring(0, word.Length - 1);
@@ -78,11 +79,11 @@ namespace Problem_Set_8_Question_8
 
                     // anything else, just add it to the result string
                     default:
-                        resultString = resultString + word;
+                        resultString = resultString + testWord;
                         break;
                 }
 
-                // add comma if comma exists
+                // add punctuation back to the word if it existed
                 if (hasPunctuation)
                 {
                     resultString = resultString + word[word.Length-1] + " ";
@@ -92,7 +93,7 @@ namespace Problem_Set_8_Question_8
                     resultString = resultString + " ";
                 }
 
-                hasPunctuation = false;
+                
 
             }
 
