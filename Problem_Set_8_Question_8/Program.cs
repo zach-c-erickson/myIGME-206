@@ -26,7 +26,7 @@ namespace Problem_Set_8_Question_8
             string testWord = null;
 
             // use a check comma bool
-            bool hasComma = false;
+            bool hasPunctuation = false;
 
             // make sure the user inputted something
             do
@@ -44,9 +44,9 @@ namespace Problem_Set_8_Question_8
             foreach(string word in words)
             {
 
-                hasComma = word.EndsWith(",");
+                hasPunctuation = Char.IsPunctuation(word, word.Length-1);
 
-                if (hasComma)
+                if (hasPunctuation)
                 {
                     testWord = word.Substring(0, word.Length - 1);
                 }
@@ -83,16 +83,16 @@ namespace Problem_Set_8_Question_8
                 }
 
                 // add comma if comma exists
-                if (hasComma)
+                if (hasPunctuation)
                 {
-                    resultString = resultString + ", ";
+                    resultString = resultString + word[word.Length-1] + " ";
                 }
                 else
                 {
                     resultString = resultString + " ";
                 }
 
-                hasComma = false;
+                hasPunctuation = false;
 
             }
 
