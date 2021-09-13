@@ -23,6 +23,10 @@ namespace Problem_Set_8_Question_8
             // initialize strings for user input and the result
             string userInput = null;
             string resultString = "";
+            string testWord = null;
+
+            // use a check comma bool
+            bool hasComma = false;
 
             // make sure the user inputted something
             do
@@ -39,24 +43,57 @@ namespace Problem_Set_8_Question_8
             // go through each word and check if it says yes or no
             foreach(string word in words)
             {
-                // make the word lowercase for checking purposes
-                switch (word.ToLower())
+
+                hasComma = word.EndsWith(",");
+
+                if (hasComma)
+                {
+                    testWord = word.Substring(0, word.Length - 1);
+                }
+                else
+                {
+                    testWord = word;
+                }
+                switch (testWord)
                 {
                     // switch no with yes
                     case "no":
-                        resultString = resultString + "yes ";
+                        resultString = resultString + "yes";
                         break;
 
                     // switch yes with no
                     case "yes":
-                        resultString = resultString + "no ";
+                        resultString = resultString + "no";
+                        break;
+
+                    // switch no with yes
+                    case "No":
+                        resultString = resultString + "Yes";
+                        break;
+
+                    // switch yes with no
+                    case "Yes":
+                        resultString = resultString + "No";
                         break;
 
                     // anything else, just add it to the result string
                     default:
-                        resultString = resultString + word + " ";
+                        resultString = resultString + word;
                         break;
                 }
+
+                // add comma if comma exists
+                if (hasComma)
+                {
+                    resultString = resultString + ", ";
+                }
+                else
+                {
+                    resultString = resultString + " ";
+                }
+
+                hasComma = false;
+
             }
 
             // return result string
