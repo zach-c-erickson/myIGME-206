@@ -172,6 +172,7 @@ class Program
             }
             else
             {
+                // round answer to two decimal spaces and prompt user to do the same
                 dAnswer = Math.Round((val1 / val2), 2);
                 sQuestions = $"Question #{nCntr + 1}: {val1} / {val2} (Round to two decimals) => ";
             }
@@ -182,6 +183,7 @@ class Program
                 Console.Write(sQuestions);
                 sResponse = Console.ReadLine();
 
+                // if division, ensure that the user is entering a double
                 if(nOp == 3)
                 {
                     try
