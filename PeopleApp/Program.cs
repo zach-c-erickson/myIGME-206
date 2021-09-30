@@ -339,6 +339,7 @@ namespace PeopleApp
                 // we use an IStudent reference to call Party()
                 iStudent = (IStudent)person;
                 iStudent.Party();
+
             }
         }
     }
