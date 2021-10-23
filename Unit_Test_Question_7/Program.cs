@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace Unit_Test_Question_7
 {
+    // Class: Program
+    // Author: Zachary Erickson
+    // Purpose: Unit Test Question 7
     class Program
     {
+        // Method: Main
+        // Purpose: Creates a Tardis object and a Phonebooth object and calls UsePhone() on both
         static void Main(string[] args)
         {
             Tardis myTardis = new Tardis();
@@ -16,31 +21,35 @@ namespace Unit_Test_Question_7
             UsePhone(myTardis);
             UsePhone(myPhoneBooth);
         }
+        // Method: UsePhone
+        // Purpose: Uses an object as a parameter and calls PhoneInterface methods on the
+        // object and calls TimeTravel() or OpenDoor() based on type
         static void UsePhone(object obj)
         {
+            // Create PhoneInterface and cast on object
             PhoneInterface myPhoneInterface = null;
-
             myPhoneInterface = (PhoneInterface)obj;
 
+            // Call both PhoneInterface methods on object
             myPhoneInterface.MakeCall();
             myPhoneInterface.HangUp();
 
+            // if obj is a Tardis, call TimeTravel()
             if(obj.GetType() == typeof(Tardis))
             {
-                Tardis obj1 = new Tardis();
+                Tardis obj1 = (Tardis)obj;
                 obj1.TimeTravel();
             }
-            if(obj.GetType() == typeof(PhoneBooth))
+            // if obj is a PhoneBooth, call OpenDoor()
+            if (obj.GetType() == typeof(PhoneBooth))
             {
-                PhoneBooth obj2 = new PhoneBooth();
+                PhoneBooth obj2 = (PhoneBooth)obj;
                 obj2.OpenDoor();
             }
         }
     }
 
-   
-
-
+    // [+I:PhoneInterface| Answer(); MakeCall(); HangUp()]
     public interface PhoneInterface
     {
         void Answer();
@@ -49,12 +58,17 @@ namespace Unit_Test_Question_7
 
     }
 
+    //[+A:Phone| -phoneNumber:string; +address:string| +PhoneNumber:string; +Connect():a; +Disconnect():a]
     public abstract class Phone
     {
         private string phoneNumber;
         public string address;
 
-        public string PhoneNumber;
+        public string PhoneNumber
+        {
+            get { return this.phoneNumber; }
+            set { this.phoneNumber = value; }
+        }
 
         public abstract void Connect();
 
@@ -63,6 +77,9 @@ namespace Unit_Test_Question_7
 
     }
 
+    // [+RotaryPhone|| +Answer(); +MakeCall(); +HangUp(); +Connect():o; +Disconnect():o]
+    // [+A:Phone] <-.- [+RotaryPhone]
+    // [+I:PhoneInterface] ^ [+RotaryPhone]
     public class RotaryPhone: Phone, PhoneInterface
     {
         public void Answer() { }
@@ -88,6 +105,9 @@ namespace Unit_Test_Question_7
 
     }
 
+    // [+Tardis| -sonicScrewdriver:bool; -whichDrWho:byte; -femaleSideKick:string; +exteriorSurfaceArea:double;
+    // +interiorVolume:double | +WhichDrWho:byte:r; +FemaleSideKick:string:r; +TimeTravel()]
+    // [+RotaryPhone] <-.- [+Tardis]
     public class Tardis : RotaryPhone
     {
         private bool sonicScrewdriver;
@@ -115,6 +135,7 @@ namespace Unit_Test_Question_7
             Console.WriteLine("Time Traveling...");
         }
 
+        // == and != can be overridden using Tardis.WhichDrWho as normal
         public static bool operator == (Tardis tardis1, Tardis tardis2)
         {
             return (tardis1.WhichDrWho == tardis2.WhichDrWho);
@@ -123,6 +144,8 @@ namespace Unit_Test_Question_7
         {
             return (tardis1.WhichDrWho != tardis2.WhichDrWho);
         }
+
+        // < and > must take into account the cases where either of the WhichDrWho values are 10
         public static bool operator < (Tardis tardis1, Tardis tardis2)
         {
            if (tardis1.WhichDrWho == 10)
@@ -155,6 +178,7 @@ namespace Unit_Test_Question_7
             }
 
         }
+        // <= and >= must take into account the cases where either of the WhichDrWho values are 10
         public static bool operator <= (Tardis tardis1, Tardis tardis2)
         {
             if (tardis1.WhichDrWho == 10 && tardis2.WhichDrWho != 10)
@@ -190,6 +214,9 @@ namespace Unit_Test_Question_7
 
     }
 
+    // [+PushButtonPhone || +Answer(); +MakeCall(); +HangUp(); +Connect():o; +Disconnect():o]
+    // [+A:Phone] <-.- [+PushButtonPhone]
+    // [+I:PhoneInterface] ^ [+PushButtonPhone]
     public class PushButtonPhone:Phone, PhoneInterface
     {
         public void Answer() { }
@@ -207,6 +234,8 @@ namespace Unit_Test_Question_7
 
     }
 
+    // [+PhoneBooth| -superMan:bool; +costPerCall:double; +phoneBook:bool | +OpenDoor(); +CloseDoor()]
+    // [+PushButtonPhone] <-.- [+PhoneBooth]
     public class PhoneBooth : PushButtonPhone
     {
         private bool superMan;
