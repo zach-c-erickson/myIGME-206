@@ -14,18 +14,18 @@ namespace Problem_Set_21
 
         // implementation of the adjacency matrix
 
-        static int[,] mGraph = new int[,]
+        static (int, string)[,] mGraph = new (int, string)[,]
         {
 
-                        /* A */  /* B */  /* C */  /* D */  /* E */  /* F */  /* G */  /* H */
-            /* A */     {  0,       2,       -1,      -1,      -1,      -1,      -1,      -1 },
-            /* B */     { -1,      -1,        2,       3,      -1,      -1,      -1,      -1 },
-            /* C */     { -1,       2,       -1,      -1,      -1,      -1,      -1,      20 },
-            /* D */     { -1,       3,        5,      -1,       2,       4,      -1,      -1 },
-            /* E */     { -1,      -1,       -1,      -1,      -1,       3,      -1,      -1 },
-            /* F */     { -1,      -1,       -1,      -1,      -1,      -1,       1,      -1 },
-            /* G */     { -1,      -1,       -1,      -1,       0,      -1,      -1,       2 },
-            /* H */     { -1,      -1,       -1,      -1,      -1,      -1,      -1,      -1 }
+                           /* A */      /* B */       /* C */      /* D */       /* E */       /* F */       /* G */       /* H */
+            /* A */     { (0, "N/E"),   (2, "S"),    (-1, null),  (-1, null),   (-1, null),   (-1, null),   (-1, null),   (-1, null) },
+            /* B */     { (-1, null),   (-1, null),  (2, "S"),    (3, "E"),     (-1, null),   (-1, null),   (-1, null),   (-1, null) },
+            /* C */     { (-1, null),   (2, "N"),    (-1, null),  (-1, null),   (-1, null),   (-1, null),   (-1, null),   (20, "S")  },
+            /* D */     { (-1, null),   (3, "W"),    (5, "S"),    (-1, null),   (2, "N"),     (4, "E"),     (-1, null),   (-1, null) },
+            /* E */     { (-1, null),   (-1, null),  (-1, null),  (-1, null),   (-1, null),   (3, "S"),     (-1, null),   (-1, null) },
+            /* F */     { (-1, null),   (-1, null),  (-1, null),  (-1, null),   (-1, null),   (-1, null),   (1, "E"),     (-1, null) },
+            /* G */     { (-1, null),   (-1, null),  (-1, null),  (-1, null),   (0, "N"),     (-1, null),   (-1, null),   (2, "S")   },
+            /* H */     { (-1, null),   (-1, null),  (-1, null),  (-1, null),   (-1, null),   (-1, null),   (-1, null),   (-1, null) }
 
         };
 
@@ -43,17 +43,21 @@ namespace Problem_Set_21
         };
 
         // store the edge weights
-        static int[][] wGraph = new int[][]
+        static (int, string)[][] wGraph = new (int, string)[][]
         {
-            /* A */ new int[] {0, 2},
-            /* B */ new int[] {2, 3},
-            /* C */ new int[] {2, 20},
-            /* D */ new int[] {3, 5, 2, 4},
-            /* E */ new int[] {3},
-            /* F */ new int[] {1},
-            /* G */ new int[] {0, 2},
-            /* H */ new int[] {},
+            /* A */ new (int, string)[] {(0, "E"), (0, "N"), (2, "S")},
+            /* B */ new (int, string)[] {(2, "S"),  (3, "E")},
+            /* C */ new (int, string)[] {(2, "N"), (20, "S")},
+            /* D */ new (int, string)[] {(3, "W"), (5, "S"), (2, "N"), (4, "E")},
+            /* E */ new (int, string)[] {(3, "S")},
+            /* F */ new (int, string)[] {(1, "E")},
+            /* G */ new (int, string)[] {(0, "N"), (2, "S")},
+            /* H */ new (int, string)[] {},
         };
+
+        static int myColumnCount = 0;
+        static int myRowCount = 0;
+        static List<string> valueList = new List<string>();
 
         // make the readable sorted list
         static SortedList<(string, string), int> slMatrix = new SortedList<(string, string), int>();
@@ -132,13 +136,13 @@ namespace Problem_Set_21
             slMatrix[("H", "G")] = -1;
             slMatrix[("H", "H")] = -1;
 
-            
+
             // Just for fun, wanted to draw the matrix in the console
 
             string myString = "       A    B    C    D    E    F    G    H\n\n";
 
             // Goes through each combination of letters and uses ASCII to convert to letter
-            for (int i = 0; i < 8; ++i)
+            for (int i = 0; i < FindRows(slMatrix); ++i)
             {
                 char char1 = Convert.ToChar(i + 65);
 
@@ -146,7 +150,7 @@ namespace Problem_Set_21
 
                 myString += " " + string1;
 
-                for (int j = 0; j < 8; ++j)
+                for (int j = 0; j < FindColumns(slMatrix); ++j)
                 {
                     char char2 = Convert.ToChar(j + 65);
 
@@ -191,7 +195,43 @@ namespace Problem_Set_21
 
             Console.WriteLine(myString);
 
+           
 
+
+        }
+
+        public static int FindRows (SortedList<(string,string),int> myList)
+        {
+            int myRowCount = 0;
+            List<string> valueList = new List<string>();
+
+            foreach(KeyValuePair<(string,string), int> kvp in myList)
+            {
+                if (!valueList.Contains(kvp.Key.Item1))
+                {
+                    valueList.Add(kvp.Key.Item1);
+                    myRowCount++;
+                }
+            }
+
+            return myRowCount;
+        }
+
+        public static int FindColumns(SortedList<(string, string), int> myList)
+        {
+            int myColumnCount = 0;
+            List<string> valueList = new List<string>();
+
+            foreach (KeyValuePair<(string, string), int> kvp in myList)
+            {
+                if (!valueList.Contains(kvp.Key.Item2))
+                {
+                    valueList.Add(kvp.Key.Item2);
+                    myColumnCount++;
+                }
+            }
+
+            return myColumnCount;
         }
     }
 }
