@@ -126,6 +126,9 @@ namespace Dont_Die_Erickson
             // int to store next room index
             int nextPlayerPos = 0;
 
+            // damage int
+            int damageTaken = 0;
+
             // win game bool
             bool winGame = false;
 
@@ -152,6 +155,10 @@ namespace Dont_Die_Erickson
 
             // user response string
             string sResponse = "";
+
+            // Create random
+
+            Random rand = new Random();
 
             start:
                 
@@ -241,14 +248,18 @@ namespace Dont_Die_Erickson
                                                 // set nextPlayerPos to the index of the room the player wants to go.
                                                 nextPlayerPos = details.Item1;
 
-                                                // take away the required health from the player
-                                                health -= details.Item3;
+                                                // set damageTaken to a random number between 1 and the weight
+                                                damageTaken = rand.Next(1, details.Item3 + 1);   
+
+                                                
 
                                                 // if damage taken is greater than 0, give the new room description and inform the player how much health they lost
                                                 if (details.Item3 > 0)
                                                 {
+                                                    // take away the required health from the player
+                                                    health -= damageTaken;
                                                     Console.WriteLine();
-                                                    Console.WriteLine(descriptions[nextPlayerPos] + " You lost " + details.Item3 + " health..");
+                                                    Console.WriteLine(descriptions[nextPlayerPos] + " You lost " + damageTaken + " health..");
                                                     Console.WriteLine();
                                                 }
                                                 else
