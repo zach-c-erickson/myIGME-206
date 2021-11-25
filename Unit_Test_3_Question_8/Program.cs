@@ -5,6 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
+
+
+// Author: David Schuh
+// Editor: Zachary Erickson
+// Purpose: Unit Test 3 Question 8
+
 namespace Unit_Test_3_Question_8
 {
     public class Node : IComparable<Node>
@@ -54,8 +60,11 @@ namespace Unit_Test_3_Question_8
 
     }
 
+    // Class: Program
+    // Purpose: Adapts the Tic-Tac-Toe game to implement the Magic Square Game
     class Program
     {
+        // Changed max spaces to 16 and max win states to 86
         const int MAX_SPACES = 16;
         const int MAX_WIN_STATES = 86;
         static int MAX_STATES = (int)Math.Pow(2, MAX_SPACES);
@@ -74,16 +83,14 @@ namespace Unit_Test_3_Question_8
             bool[] grid = new bool[MAX_SPACES];
 
             // p1 and p2 are the integer representations of the players game boards
-            // using the lowest 9 bits to indicate their chosen spaces
-            // bit 8 corresponds to the top left space of the game board
-            // bit 7 corresponds to the top center space
-            // ...
-            // bit 0 (the least significant bit) corresponds to the bottom right space
+            
             int p1 = 0;
             int p2 = 0;
 
             int nWinner = 0;
             int nPlayer = 1;
+
+            // Added values based on the Magic Square game
 
             int[] nValues = new int[]
             {
@@ -92,6 +99,8 @@ namespace Unit_Test_3_Question_8
                 9, 6, 7, 12,
                 4, 15, 14, 1
             };
+
+            // Set magicNumber to 34
 
             int nMagicNumber = 34;
 
@@ -133,6 +142,8 @@ namespace Unit_Test_3_Question_8
                 Node node = new Node(i);
                 game[i] = node;
             }
+
+            // Commented out the debug code
 
             /*for (i = 0; i < MAX_STATES; ++i)
             {
@@ -189,6 +200,7 @@ namespace Unit_Test_3_Question_8
                         int nMove = 0;
                         do
                         {
+                            // Edited the move possibilities
                             Console.Write("Player 1 Move (1-16): ");
                         } while (!int.TryParse(Console.ReadLine(), out nMove));
 
